@@ -1,3 +1,3 @@
-# chrome-extension-file-merge
+# chrome-extension-dict
 
 合并文件

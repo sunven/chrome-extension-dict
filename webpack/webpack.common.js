@@ -6,6 +6,8 @@ const srcDir = path.join(__dirname, '..', 'src')
 module.exports = {
   entry: {
     popup: path.join(srcDir, 'popup.ts'),
+    background: path.join(srcDir, 'background.ts'),
+    content: path.join(srcDir, 'content.ts'),
   },
   output: {
     path: path.join(__dirname, '../dist/js'),
@@ -38,6 +40,9 @@ module.exports = {
   },
   resolve: {
     extensions: ['.ts', '.js'],
+    alias: {
+      '@': path.resolve(__dirname, 'src'), // 这样配置后 @ 可以指向 src 目录
+    },
   },
   plugins: [
     new CopyPlugin({

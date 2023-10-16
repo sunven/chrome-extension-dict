@@ -1,7 +1,7 @@
 {
-  "name": "chrome-extension-file-merge",
+  "name": "chrome-extension-dict",
   "version": "1.0.0",
-  "description": "chrome-extension-file-merge",
+  "description": "chrome-extension-dict",
   "main": "index.js",
   "scripts": {
     "watch": "webpack --config webpack/webpack.dev.js --watch",
@@ -13,7 +13,11 @@
     "type": "git",
     "url": "https://github.com/sunven/QHelper.git"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@types/dompurify": "^3.0.3",
+    "axios": "^1.5.1",
+    "dompurify": "^3.0.6"
+  },
   "devDependencies": {
     "@babel/core": "^7.21.0",
     "@babel/preset-typescript": "^7.21.0",
