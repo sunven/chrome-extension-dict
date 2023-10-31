@@ -16,12 +16,21 @@
   "dependencies": {
     "@types/dompurify": "^3.0.3",
     "axios": "^1.5.1",
-    "dompurify": "^3.0.6"
+    "classnames": "^2.3.2",
+    "dompurify": "^3.0.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-shadow": "^20.4.0",
+    "react-transition-group": "^4.4.5"
   },
   "devDependencies": {
     "@babel/core": "^7.21.0",
+    "@babel/preset-react": "^7.22.15",
     "@babel/preset-typescript": "^7.21.0",
     "@types/chrome": "^0.0.220",
+    "@types/react": "^18.2.33",
+    "@types/react-dom": "^18.2.14",
+    "@types/react-transition-group": "^4.4.8",
     "babel-loader": "^9.1.2",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.3",
