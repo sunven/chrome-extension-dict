@@ -2,7 +2,7 @@ import { handleNoResult, getText, getInnerHTML, DictSearchResult } from './utils
 import { DictConfigs } from '@/app-config'
 import { getDefaultProfile } from './app-config/profiles'
 import { render } from 'react-dom'
-import { SaladBowlPortal } from '@/components/SaladBowl/SaladBowl.portal'
+import SaladBowlContainer from './components/SaladBowl/SaladBowl.container'
 import React from 'react'
 
 const HOST = 'https://cn.bing.com'
@@ -250,8 +250,7 @@ function handleRelatedResult(
 }
 
 async function main() {
-  const A = SaladBowlPortal
-  render(<A />, document.createElement('div'))
+  render(<SaladBowlContainer />, document.createElement('div'))
 }
 
 main()
