@@ -1,24 +1,30 @@
-import { handleNoResult, getText, getInnerHTML, DictSearchResult } from './utils/helpers'
-import { DictConfigs } from '@/app-config'
 import { getDefaultProfile } from './app-config/profiles'
 import { render } from 'react-dom'
 import SaladBowlContainer from './components/SaladBowl/SaladBowl.container'
 import React from 'react'
 import { ballStore } from './ballStore'
+import { panelStore } from './panelStore'
 import { handleLexResult, handleMachineResult, handleRelatedResult } from '@/components/dictionaries/bing/engine'
-
-// export type BingResult = BingResultLex | BingResultMachine | BingResultRelated
+import DictPanelContainer from './components/DictPanel/DictPanel.container'
 
 //鼠标抬起
 document.addEventListener('mouseup', e => {
   const selection = window.getSelection()
   const text = selection?.toString() || ''
   if (!text) {
-    ballStore.setBall({ show: false, panelCSS: '', withAnimation: false, enableHover: false, onActive: () => {} })
+    ballStore.setBall({ show: false, onActive: () => {} })
     return
   }
   const rect = selection?.getRangeAt(0).getBoundingClientRect()
-  ballStore.setBall({ show: true, panelCSS: '', x: rect?.right, y: rect?.top, withAnimation: false, enableHover: false, onActive: () => {} })
+  ballStore.setBall({
+    show: true,
+    x: rect?.right,
+    y: rect?.top,
+    onActive: () => {
+      console.log('a', 1)
+      panelStore.setPanel({ show: true, x: rect?.right, y: rect?.top })
+    },
+  })
   console.log('mouseup', text)
   chrome.runtime.sendMessage(
     {
@@ -54,6 +60,7 @@ document.addEventListener('mouseup', e => {
 
 function main() {
   render(<SaladBowlContainer />, document.createElement('div'))
+  render(<DictPanelContainer />, document.createElement('div'))
 }
 
 main()

@@ -1,20 +1,14 @@
 export type BallType = {
   show: boolean
-  panelCSS: string
   x?: number
   y?: number
-  withAnimation: boolean
-  enableHover: boolean
   onActive: () => void
 }
 
 const initialBall: BallType = {
   show: false,
-  panelCSS: '',
   x: 0,
   y: 0,
-  withAnimation: false,
-  enableHover: false,
   onActive: () => {},
 }
 

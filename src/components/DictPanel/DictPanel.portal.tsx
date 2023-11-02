@@ -8,11 +8,10 @@ export interface DictPanelPortalProps extends Omit<DictPanelProps, 'onHover'> {
 
 export const DictPanelPortal: FC<DictPanelPortalProps> = props => {
   const { show, ...restProps } = props
-  const [isHover, setHover] = useState(false)
   const bowlStyles = <style>{require('!sass-loader!./DictPanel.shadow.scss?raw')}</style>
 
   return (
-    <ShadowPortal id="saladict-dictpanel-root" head={bowlStyles} classNames="dictpanel" in={show || isHover}>
+    <ShadowPortal id="saladict-dictpanel-root" head={bowlStyles} classNames="dictpanel" in={show} timeout={0}>
       {() => <DictPanel {...restProps} />}
     </ShadowPortal>
   )

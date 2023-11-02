@@ -14,7 +14,7 @@ export interface DictPanelProps {
  */
 export const DictPanel: FC<DictPanelProps> = props => {
   return (
-    <div role="img" className={classnames('dictpanel')} style={{ transform: `translate(${props.x}px, ${props.y}px)` }} onClick={() => {}}>
+    <div className={classnames('dictpanel')} style={{ transform: `translate(${props.x}px, ${props.y}px)` }} onClick={() => {}}>
       aaabbbccc
     </div>
   )

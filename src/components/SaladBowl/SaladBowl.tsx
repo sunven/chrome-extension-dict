@@ -7,10 +7,8 @@ export interface SaladBowlProps {
   /** Viewport based coordinate. */
   readonly y?: number
   /** React on hover. */
-  readonly enableHover: boolean
   /** When bowl is activated via mouse. */
   readonly onActive: () => void
-  readonly onHover: (isHover: boolean) => void
 }
 
 /**
@@ -20,9 +18,7 @@ export const SaladBowl: FC<SaladBowlProps> = props => {
   return (
     <div
       role="img"
-      className={classnames('saladbowl', 'saladict-external', {
-        enableHover: props.enableHover,
-      })}
+      className={classnames('saladbowl', 'saladict-external')}
       style={{ transform: `translate(${props.x}px, ${props.y}px)` }}
       onClick={() => props.onActive()}
     >
