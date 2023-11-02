@@ -1,5 +1,5 @@
 import React, { useMemo, useEffect, ReactNode } from 'react'
-import ReactDOM from 'react-dom'
+import { createPortal } from 'react-dom'
 import CSSTransition, { CSSTransitionProps } from 'react-transition-group/CSSTransition'
 import root from 'react-shadow'
 
@@ -50,7 +50,7 @@ export const ShadowPortal = (props: ShadowPortalProps) => {
     []
   )
 
-  return ReactDOM.createPortal(
+  return createPortal(
     <root.div className={shadowRootClassName}>
       <div className={innerRootClassName} style={styleResetBoundary}>
         {head}

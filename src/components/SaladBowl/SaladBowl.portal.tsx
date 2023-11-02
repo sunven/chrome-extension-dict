@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react'
-import ShadowPortal from '@/components/ShadowPortal'
+import ShadowPortal from '../ShadowPortal'
 import { SaladBowl, SaladBowlProps } from './SaladBowl'
 
 const animationTimeout = { enter: 1000, exit: 100, appear: 1000 }
@@ -17,7 +17,7 @@ export interface SaladBowlPortalProps extends Omit<SaladBowlProps, 'onHover'> {
 export const SaladBowlPortal: FC<SaladBowlPortalProps> = props => {
   const { show, panelCSS, withAnimation, ...restProps } = props
   const [isHover, setHover] = useState(false)
-  const bowlStyles = <style>{require('./SaladBowl.shadow.scss').toString()}</style>
+  const bowlStyles = <style>{require('!sass-loader!./SaladBowl.shadow.scss?raw')}</style>
 
   return (
     <ShadowPortal

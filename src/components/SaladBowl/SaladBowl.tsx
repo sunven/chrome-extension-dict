@@ -3,9 +3,9 @@ import classnames from 'classnames'
 
 export interface SaladBowlProps {
   /** Viewport based coordinate. */
-  readonly x: number
+  readonly x?: number
   /** Viewport based coordinate. */
-  readonly y: number
+  readonly y?: number
   /** React on hover. */
   readonly enableHover: boolean
   /** When bowl is activated via mouse. */

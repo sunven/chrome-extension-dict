@@ -1,4 +1,4 @@
-import './assets/css/popup.css'
+import '@/assets/css/popup.css'
 
 const downloadByData = (data: string) => {
   const url = window.URL.createObjectURL(

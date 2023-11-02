@@ -1,4 +1,5 @@
 $bowl-width: 30px;
+$global-zindex-bowl: 2147483647;
 
 .saladbowl {
   position: fixed;
@@ -10,25 +11,6 @@ $bowl-width: 30px;
   user-select: none;
   cursor: pointer;
 
-  @include isAnimate {
-    will-change: transform;
-    transition: transform 0.3s ease-out;
-
-    &.enableHover:hover {
-      .saladbowl-leaf {
-        animation: saladbowl-leaf-shake 0.7s infinite linear;
-      }
-      .saladbowl-orange {
-        transform-origin: 301.8px 187.4px;
-        animation: saladbowl-orange-spin 0.7s infinite linear;
-      }
-      .saladbowl-tomato {
-        transform-origin: 297.8px 126.4px;
-        animation: saladbowl-tomato-shake 0.7s infinite linear;
-      }
-    }
-  }
-
   &,
   & > svg {
     // #947 fix Super Dark Mode
@@ -37,21 +19,6 @@ $bowl-width: 30px;
 }
 
 .saladbowl {
-  @include isAnimate(-enter-active) {
-    & > svg {
-      animation: saladbowl-jelly 1000ms linear;
-    }
-  }
-
-  @include isAnimate(-exit) {
-    opacity: 1;
-  }
-
-  @include isAnimate(-exit-active) {
-    opacity: 0;
-    transition: opacity 0.1s;
-  }
-
   &-exit-done {
     display: none;
   }

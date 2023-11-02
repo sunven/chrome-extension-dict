@@ -1,8 +1,8 @@
 export type BallType = {
   show: boolean
   panelCSS: string
-  x: number
-  y: number
+  x?: number
+  y?: number
   withAnimation: boolean
   enableHover: boolean
   onActive: () => void
@@ -23,7 +23,7 @@ let listeners: Function[] = []
 
 export const ballStore = {
   setBall(_ball: BallType) {
-    ball = { ...ball }
+    ball = { ..._ball }
     emitChange()
   },
   subscribe(listener: Function) {

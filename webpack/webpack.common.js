@@ -21,6 +21,21 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
+        resourceQuery: /raw/,
+        type: 'asset/source',
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          // Creates `style` nodes from JS strings
+          'style-loader',
+          // Translates CSS into CommonJS
+          'css-loader',
+          // Compiles Sass to CSS
+          'sass-loader',
+        ],
+      },
+      {
         test: /\.css$/i,
         sideEffects: true,
         use: ['style-loader', 'css-loader'],
@@ -39,9 +54,9 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
+    extensions: ['.ts', '.js', '.tsx'],
     alias: {
-      '@': path.resolve(__dirname, 'src'), // 这样配置后 @ 可以指向 src 目录
+      '@': path.resolve(__dirname, '../', 'src'), // 这样配置后 @ 可以指向 src 目录
     },
   },
   plugins: [
