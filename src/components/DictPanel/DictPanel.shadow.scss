@@ -1,4 +1,3 @@
-$bowl-width: 30px;
 $global-zindex-bowl: 2147483647;
 
 .dictpanel {
@@ -6,20 +5,4 @@ $global-zindex-bowl: 2147483647;
   z-index: $global-zindex-bowl;
   top: 0;
   left: 0;
-  width: $bowl-width;
-  height: $bowl-width;
-  user-select: none;
-  cursor: pointer;
-
-  &,
-  & > svg {
-    // #947 fix Super Dark Mode
-    background-color: transparent !important;
-  }
-}
-
-.dictpanel {
-  &-exit-done {
-    display: none;
-  }
 }
