@@ -2,12 +2,14 @@ export type PanelType = {
   show: boolean
   x?: number
   y?: number
+  data: {}
 }
 
 const initialPanel: PanelType = {
   show: false,
   x: 0,
   y: 0,
+  data: {},
 }
 
 let panel = initialPanel

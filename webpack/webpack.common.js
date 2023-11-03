@@ -7,7 +7,7 @@ module.exports = {
   entry: {
     popup: path.join(srcDir, 'popup.ts'),
     background: path.join(srcDir, 'background.ts'),
-    content: path.join(srcDir, 'content.tsx'),
+    content: path.join(srcDir, 'content/index.tsx'),
   },
   output: {
     path: path.join(__dirname, '../dist/js'),
@@ -31,14 +31,14 @@ module.exports = {
           'style-loader',
           // Translates CSS into CommonJS
           'css-loader',
+          'postcss-loader',
           // Compiles Sass to CSS
           'sass-loader',
         ],
       },
       {
         test: /\.css$/i,
-        sideEffects: true,
-        use: ['style-loader', 'css-loader'],
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
       },
       {
         test: /\.svg$/i,

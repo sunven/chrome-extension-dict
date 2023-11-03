@@ -15,7 +15,7 @@ export interface DictPanelProps {
 export const DictPanel: FC<DictPanelProps> = props => {
   return (
     <div className={classnames('dictpanel')} style={{ transform: `translate(${props.x}px, ${props.y}px)` }} onClick={() => {}}>
-      aaabbbccc
+      <h1 className="text-3xl font-bold underline">Hello world!</h1>
     </div>
   )
 }
