@@ -1,14 +1,12 @@
-import { getDefaultProfile } from '../app-config/profiles'
-import { render } from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import SaladBowlContainer from '../components/SaladBowl/SaladBowl.container'
 import React from 'react'
 import { ballStore } from '../ballStore'
 import { panelStore } from '../panelStore'
-import { handleLexResult, handleMachineResult, handleRelatedResult } from '@/components/dictionaries/bing/engine'
 import DictPanelContainer from '../components/DictPanel/DictPanel.container'
 import './index.css'
 
-//鼠标抬起
+// 鼠标抬起
 document.addEventListener('mouseup', e => {
   const selection = window.getSelection()
   const text = selection?.toString() || ''
@@ -69,8 +67,8 @@ document.addEventListener('mouseup', e => {
 })
 
 function main() {
-  render(<SaladBowlContainer />, document.createElement('div'))
-  render(<DictPanelContainer />, document.createElement('div'))
+  createRoot(document.createElement('div')).render(<SaladBowlContainer />)
+  createRoot(document.createElement('div')).render(<DictPanelContainer />)
 }
 
 main()
