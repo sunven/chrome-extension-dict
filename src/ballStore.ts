@@ -15,6 +15,10 @@ const initialBall: BallType = {
 let ball = initialBall
 let listeners: Function[] = []
 
+function emitChange() {
+  listeners.forEach((listener) => listener())
+}
+
 export const ballStore = {
   setBall(_ball: BallType) {
     ball = { ..._ball }
@@ -23,16 +27,10 @@ export const ballStore = {
   subscribe(listener: Function) {
     listeners = [...listeners, listener]
     return () => {
-      listeners = listeners.filter(l => l !== listener)
+      listeners = listeners.filter((l) => l !== listener)
     }
   },
   getSnapshot() {
     return ball
   },
-}
-
-function emitChange() {
-  for (let listener of listeners) {
-    listener()
-  }
 }

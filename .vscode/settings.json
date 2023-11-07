@@ -6,5 +6,10 @@
       "fileMatch": ["/manifest.json"],
       "url": "http://json.schemastore.org/chrome-manifest"
     }
-  ]
+  ],
+  "prettier.enable": false,
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  }
 }

@@ -15,6 +15,10 @@ const initialPanel: PanelType = {
 let panel = initialPanel
 let listeners: Function[] = []
 
+function emitChange() {
+  listeners.forEach((listener) => listener())
+}
+
 export const panelStore = {
   setPanelData(data: any) {
     panel = { ...panel, data }
@@ -27,16 +31,10 @@ export const panelStore = {
   subscribe(listener: Function) {
     listeners = [...listeners, listener]
     return () => {
-      listeners = listeners.filter(l => l !== listener)
+      listeners = listeners.filter((l) => l !== listener)
     }
   },
   getSnapshot() {
     return panel
   },
-}
-
-function emitChange() {
-  for (let listener of listeners) {
-    listener()
-  }
 }

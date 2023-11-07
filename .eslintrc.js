@@ -4,7 +4,8 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: ['airbnb', 'plugin:react/recommended'],
+  // airbnb 等同于 eslint-config-airbnb
+  extends: ['airbnb', 'plugin:prettier/recommended'],
   overrides: [
     {
       env: {
@@ -20,6 +21,13 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['react'],
-  // rules: { '@typescript-eslint/comma-dangle': 'off' },
+  // settings: {
+  //   'import/resolver': {
+  //     typescript: {},
+  //   },
+  // },
+  plugins: ['prettier'],
+  rules: {
+    'prettier/prettier': 'error',
+  },
 }

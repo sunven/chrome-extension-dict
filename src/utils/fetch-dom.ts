@@ -17,7 +17,7 @@ export function fetchDirtyDOM(url: string, config: AxiosRequestConfig = {}): Pro
   return axios(url, {
     withCredentials: false,
     ...config,
-    transformResponse: [data => data],
+    transformResponse: [(data) => data],
     responseType: 'document',
   })
   // .then(({ data }) => (process.env.NODE_ENV !== 'production' ? new DOMParser().parseFromString(data, 'text/html') : data))
@@ -28,7 +28,7 @@ export function fetchPlainText(url: string, config: AxiosRequestConfig = {}): Pr
     withCredentials: false,
     ...config,
     // axios bug https://github.com/axios/axios/issues/907
-    transformResponse: [data => data],
+    transformResponse: [(data) => data],
     responseType: 'text',
   }).then(({ data }) => data)
 }
