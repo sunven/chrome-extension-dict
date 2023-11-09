@@ -6,7 +6,7 @@ export interface DictPanelPortalProps extends Omit<DictPanelProps, 'onHover'> {
   show: boolean
 }
 
-export const DictPanelPortal: FC<DictPanelPortalProps> = props => {
+export const DictPanelPortal: FC<DictPanelPortalProps> = (props) => {
   const { show, ...restProps } = props
   const bowlStyles = (
     <>
@@ -16,7 +16,13 @@ export const DictPanelPortal: FC<DictPanelPortalProps> = props => {
   )
 
   return (
-    <ShadowPortal id="saladict-dictpanel-root" head={bowlStyles} classNames="dictpanel" in={show} timeout={0}>
+    <ShadowPortal
+      id="saladict-dictpanel-root"
+      head={bowlStyles}
+      classNames="dictpanel"
+      in={show}
+      timeout={0}
+    >
       {() => <DictPanel {...restProps} />}
     </ShadowPortal>
   )

@@ -14,7 +14,7 @@ export interface SaladBowlProps {
 /**
  * Cute little icon that pops up near the selection.
  */
-export const SaladBowl: FC<SaladBowlProps> = props => {
+export const SaladBowl: FC<SaladBowlProps> = (props) => {
   return (
     <div
       role="img"

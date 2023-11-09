@@ -31,6 +31,7 @@ module.exports = {
     'react/function-component-definition': 0,
     'react/jsx-filename-extension': 0,
     'react/no-array-index-key': 0,
+    'react/jsx-props-no-spreading': 0,
     'import/extensions': 0, // https://stackoverflow.com/questions/59265981/typescript-eslint-missing-file-extension-ts-import-extensions
     'jsx-a11y/click-events-have-key-events': 0,
     'jsx-a11y/no-static-element-interactions': 0,
