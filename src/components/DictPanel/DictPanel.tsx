@@ -20,7 +20,7 @@ export const DictPanel: FC<DictPanelProps> = (props) => {
     return null
   }
 
-  const { ec, simple } = data
+  const { ec, simple, rel_word: relWord } = data
   if (!ec || !simple) {
     return null
   }
@@ -33,6 +33,7 @@ export const DictPanel: FC<DictPanelProps> = (props) => {
       <div className="max-w-md divide-y divide-gray-300/50 border-2 border-solid border-indigo-600 p-4 bg-green-50">
         {!!data && (
           <>
+            <div className="" />
             <div className="relative">
               <div
                 className="absolute -right-1 -top-1 cursor-pointer"
@@ -80,7 +81,22 @@ export const DictPanel: FC<DictPanelProps> = (props) => {
               </div>
             </div>
             <div>
-              <h1 className="text-3xl font-bold underline">Hello world!</h1>
+              <div className="flex">
+                <div>同根词</div>
+              </div>
+              <div>
+                <p>词根：{relWord.stem}</p>
+                {relWord.rels.map((item: any) => (
+                  <div>
+                    <p>{item.rel.pos}</p>
+                    {item.rel.words.map((w: any) => (
+                      <p>
+                        {w.word}:{w.tran}
+                      </p>
+                    ))}
+                  </div>
+                ))}
+              </div>
             </div>
           </>
         )}
