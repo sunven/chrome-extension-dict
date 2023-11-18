@@ -9,7 +9,7 @@ import './index.css'
 // 鼠标抬起
 document.addEventListener('mouseup', (e) => {
   const selection = window.getSelection()
-  const text = selection?.toString() || ''
+  const text = selection?.toString().trim() || ''
   if (!text) {
     ballStore.setBall({ show: false, onActive: () => {} })
     return
