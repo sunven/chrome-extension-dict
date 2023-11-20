@@ -1,4 +1,4 @@
-import React, { useState, type FC } from 'react'
+import React, { useState, useRef, type FC, useEffect } from 'react'
 import classnames from 'classnames'
 import { panelStore } from '@/panelStore'
 
@@ -31,6 +31,10 @@ function getY(mouseMoveClient: CoordType, mouseDownClient: CoordType) {
   return mouseMoveClient.y - mouseDownClient.y
 }
 
+let isDragging = false
+let offsetX: number
+let offsetY: number
+
 /**
  * Cute little icon that pops up near the selection.
  */
@@ -45,11 +49,33 @@ export const DictPanel: FC<DictPanelProps> = (props) => {
   if (!ec || !simple) {
     return null
   }
-  const [mouseDownClient, setMouseDownClient] = useState<CoordType>({})
-  const [mouseMoveClient, setMouseMoveClient] = useState<CoordType>({})
+  const ref = useRef<HTMLDivElement>()
+
+  useEffect(() => {
+    const draggableElement = ref.current
+    if (!draggableElement) {
+      return
+    }
+    draggableElement.addEventListener('mousedown', (event) => {
+      isDragging = true
+      offsetX = event.clientX - draggableElement.offsetLeft
+      offsetY = event.clientY - draggableElement.offsetTop
+    })
+    document.addEventListener('mousemove', (event) => {
+      if (isDragging) {
+        draggableElement.style.left = `${event.clientX - offsetX}px`
+        draggableElement.style.top = `${event.clientY - offsetY}px`
+      }
+    })
+
+    document.addEventListener('mouseup', () => {
+      isDragging = false
+    })
+  })
 
   return (
     <div
+      ref={ref}
       role="img"
       className={classnames('dictpanel', 'saladict-external')}
       style={{
@@ -57,47 +83,18 @@ export const DictPanel: FC<DictPanelProps> = (props) => {
         position: 'fixed',
         zIndex: 1,
         // top: y,
-        left: x + getX(mouseMoveClient, mouseDownClient),
-        top: y + getY(mouseMoveClient, mouseDownClient),
+        left: x,
+        top: y,
         // bottom: 0,
         // right: 0,
       }}
     >
-      <div className="max-w-md divide-y divide-gray-300/50 border-2 border-solid border-indigo-600 p-4 bg-green-50">
+      <div className="max-w-md divide-y divide-gray-300/50 border-2 border-solid border-indigo-600 p-4 pt-0 bg-green-50">
         {!!data && (
           <>
-            <div className="flex justify-between items-center gap-4">
+            <div className="flex justify-between items-center gap-4 h-8">
               <div>dic</div>
-              <div
-                className="flex-1 cursor-move"
-                onMouseDown={(e) => {
-                  setMouseDownClient({ x: e.clientX, y: e.clientY })
-                  console.log('onMouseDown', e.clientX, e.clientY)
-                }}
-                onMouseMove={(e) => {
-                  if (mouseMoveClient.x === undefined || mouseDownClient.y === undefined) {
-                    return
-                  }
-                  setMouseMoveClient({ x: e.clientX, y: e.clientY })
-                  // console.log(
-                  //   'onMouseMove',
-                  //   e.clientX,
-                  //   e.clientY,
-                  //   'x,y',
-                  //   x,
-                  //   y,
-                  //   'cha',
-                  //   e.clientX - mouseDownClient.x,
-                  //   e.clientY - mouseDownClient.y,
-                  // )
-                }}
-                onMouseUp={() => {
-                  setMouseDownClient({})
-                  setMouseMoveClient({})
-                }}
-              >
-                drag
-              </div>
+              <div className="flex-1 cursor-move" />
               <div
                 className=" cursor-pointer"
                 onClick={() => {
