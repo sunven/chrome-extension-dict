@@ -6,6 +6,20 @@ import { panelStore } from '../panelStore'
 import DictPanelContainer from '../components/DictPanel/DictPanel.container'
 import './index.css'
 
+function isInDictPanel(element: Node | EventTarget | null): boolean {
+  if (!element) {
+    return false
+  }
+
+  for (let el: Element | null = element as Element; el; el = el.parentElement) {
+    if (el.classList && el.classList.contains('cranberry-panel')) {
+      return true
+    }
+  }
+
+  return false
+}
+
 // 鼠标抬起
 document.addEventListener('mouseup', (e) => {
   const selection = window.getSelection()
@@ -64,6 +78,13 @@ document.addEventListener('mouseup', (e) => {
   //     }
   //   }
   // )
+})
+
+document.addEventListener('mousedown', (e) => {
+  if (isInDictPanel(e.target)) {
+    return
+  }
+  panelStore.closePanel(false)
 })
 
 function main() {

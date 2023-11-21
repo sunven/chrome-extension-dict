@@ -20,6 +20,10 @@ function emitChange() {
 }
 
 export const panelStore = {
+  closePanel(show: boolean) {
+    panel = { ...panel, show }
+    emitChange()
+  },
   setPanelData(data: any) {
     panel = { ...panel, data }
     emitChange()

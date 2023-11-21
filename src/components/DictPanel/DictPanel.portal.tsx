@@ -19,6 +19,7 @@ export const DictPanelPortal: FC<DictPanelPortalProps> = (props) => {
     <ShadowPortal
       id="saladict-dictpanel-root"
       head={bowlStyles}
+      shadowRootClassName="cranberry-panel"
       classNames="dictpanel"
       in={show}
       timeout={0}
