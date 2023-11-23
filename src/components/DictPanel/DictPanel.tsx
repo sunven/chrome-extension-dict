@@ -19,40 +19,46 @@ let offsetY: number
  * Cute little icon that pops up near the selection.
  */
 export const DictPanel: FC<DictPanelProps> = (props) => {
+  const panelRef = useRef<HTMLDivElement>()
+  const dragRef = useRef<HTMLDivElement>()
+  useEffect(() => {
+    const panelElement = panelRef.current
+    const draggableElement = dragRef.current
+    if (!draggableElement || !panelElement) {
+      return () => {}
+    }
+    const mousedownListener = (event: MouseEvent) => {
+      isDragging = true
+      offsetX = event.clientX - panelElement.offsetLeft
+      offsetY = event.clientY - panelElement.offsetTop
+    }
+    const mousemoveListener = (event: MouseEvent) => {
+      if (isDragging) {
+        panelElement.style.left = `${event.clientX - offsetX}px`
+        panelElement.style.top = `${event.clientY - offsetY}px`
+      }
+    }
+    const mouseupListener = () => {
+      isDragging = false
+    }
+    draggableElement.addEventListener('mousedown', mousedownListener)
+    document.addEventListener('mousemove', mousemoveListener)
+    document.addEventListener('mouseup', mouseupListener)
+    return () => {
+      draggableElement.removeEventListener('mousedown', mousedownListener)
+      document.removeEventListener('mousemove', mousemoveListener)
+      document.removeEventListener('mouseup', mouseupListener)
+    }
+  }, [])
   const { data, x, y } = props
   if (!data) {
     return null
   }
 
-  const { ec, simple, rel_word: relWord } = data
+  const { ec, simple, rel_word: relWord = { stem: '', rels: [] } } = data
   if (!ec || !simple) {
     return null
   }
-  const panelRef = useRef<HTMLDivElement>()
-  const dragRef = useRef<HTMLDivElement>()
-
-  useEffect(() => {
-    const panelElement = panelRef.current
-    const draggableElement = dragRef.current
-    if (!draggableElement || !panelElement) {
-      return
-    }
-    draggableElement.addEventListener('mousedown', (event) => {
-      isDragging = true
-      offsetX = event.clientX - panelElement.offsetLeft
-      offsetY = event.clientY - panelElement.offsetTop
-    })
-    document.addEventListener('mousemove', (event) => {
-      if (isDragging) {
-        panelElement.style.left = `${event.clientX - offsetX}px`
-        panelElement.style.top = `${event.clientY - offsetY}px`
-      }
-    })
-
-    document.addEventListener('mouseup', () => {
-      isDragging = false
-    })
-  })
 
   return (
     <div
@@ -90,7 +96,7 @@ export const DictPanel: FC<DictPanelProps> = (props) => {
               <span className="ml-2">美/{ec.word[0].usphone}/</span>
               <span className="ml-2">英/{ec.word[0].ukphone}/</span>
             </div>
-            <div className="text-sm leading-7 text-gray-600">
+            <div className="text-sm leading-6 text-gray-600">
               {ec.word[0].trs.map((item: any, index: number) => {
                 const txt = item.tr[0].l.i[0]
                 const ind = txt.indexOf(' ')
@@ -103,10 +109,10 @@ export const DictPanel: FC<DictPanelProps> = (props) => {
               })}
               <div className="flex">
                 <div className="w-10 flex-none" />
-                <div className="flex-auto">{ec.exam_type.join('|')}</div>
+                <div className="flex-auto">{(ec.exam_type || []).join('|')}</div>
               </div>
               <div className="max-w-md">
-                {ec.word[0].wfs.map((item: any, index: number) => (
+                {(ec.word[0].wfs || []).map((item: any, index: number) => (
                   <span key={index} className={index === 0 ? '' : 'ml-4'}>
                     <span className="text-orange-500">{item.wf.name}: </span>
                     {item.wf.value}
@@ -115,18 +121,18 @@ export const DictPanel: FC<DictPanelProps> = (props) => {
               </div>
             </div>
             <div>
-              <div className="flex">
+              {/* <div className="flex">
                 <div>同根词</div>
-              </div>
+              </div> */}
               <div>
                 <p>
                   词根: <span className="text-rose-500">{relWord.stem}</span>
                 </p>
-                {relWord.rels.map((item: any) => (
-                  <div className="text-gray-600 text-sm">
+                {relWord.rels.map((item: any, i: number) => (
+                  <div key={i} className="text-gray-600 text-sm">
                     <p className="text-blue-500">{item.rel.pos}</p>
-                    {item.rel.words.map((w: any) => (
-                      <p>
+                    {item.rel.words.map((w: any, index: number) => (
+                      <p key={index}>
                         {w.word}:{w.tran}
                       </p>
                     ))}

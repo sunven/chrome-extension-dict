@@ -4,7 +4,8 @@ import { getDefaultProfile } from '@/app-config/profiles'
 
 const HOST = 'https://cn.bing.com'
 
-const DICT_LINK = 'https://cn.bing.com/dict/clientsearch?mkt=zh-CN&setLang=zh&form=BDVEHC&ClientVer=BDDTV3.5.1.4320&q='
+const DICT_LINK =
+  'https://cn.bing.com/dict/clientsearch?mkt=zh-CN&setLang=zh&form=BDVEHC&ClientVer=BDDTV3.5.1.4320&q='
 
 type BingConfig = DictConfigs['bing']
 type BingSearchResultLex = DictSearchResult<BingResultLex>
@@ -63,7 +64,7 @@ export interface BingResultRelated {
 export function handleLexResult(
   doc: Document,
   options: BingConfig['options'],
-  transform: null | ((text: string) => string)
+  transform: null | ((text: string) => string),
 ): BingSearchResultLex | Promise<BingSearchResultLex> {
   const searchResult: DictSearchResult<BingResultLex> = {
     result: {
@@ -76,7 +77,7 @@ export function handleLexResult(
   if (options.phsym) {
     const $prons = Array.from(doc.querySelectorAll('.client_def_hd_pn_list'))
     if ($prons.length > 0) {
-      searchResult.result.phsym = $prons.map(el => {
+      searchResult.result.phsym = $prons.map((el) => {
         let pron = ''
         const $audio = el.querySelector('.client_aud_o')
         if ($audio) {
@@ -90,9 +91,9 @@ export function handleLexResult(
 
       searchResult.audio = searchResult.result.phsym.reduce((audio: any, { lang, pron }) => {
         if (/us|美/i.test(lang)) {
-          audio['us'] = pron
+          audio.us = pron
         } else if (/uk|英/i.test(lang)) {
-          audio['uk'] = pron
+          audio.uk = pron
         }
         return audio
       }, {})
@@ -105,7 +106,7 @@ export function handleLexResult(
     if ($container) {
       const $defs = Array.from($container.querySelectorAll('.client_def_bar'))
       if ($defs.length > 0) {
-        searchResult.result.cdef = $defs.map(el => ({
+        searchResult.result.cdef = $defs.map((el) => ({
           pos: getText(el, '.client_def_title_bar', transform),
           def: getText(el, '.client_def_list', transform),
         }))
@@ -117,7 +118,7 @@ export function handleLexResult(
   if (options.tense) {
     const $infs = Array.from(doc.querySelectorAll('.client_word_change_word'))
     if ($infs.length > 0) {
-      searchResult.result.infs = $infs.map(el => (el.textContent || '').trim())
+      searchResult.result.infs = $infs.map((el) => (el.textContent || '').trim())
     }
   }
 
@@ -131,13 +132,13 @@ export function handleLexResult(
       if ($audio) {
         mp3 = (($audio.getAttribute('onclick') || '').match(/https.*\.mp3/) || [''])[0]
       }
-      el.querySelectorAll('.client_sen_en_word').forEach($word => {
+      el.querySelectorAll('.client_sen_en_word').forEach(($word) => {
         $word.outerHTML = getText($word)
       })
-      el.querySelectorAll('.client_sen_cn_word').forEach($word => {
+      el.querySelectorAll('.client_sen_cn_word').forEach(($word) => {
         $word.outerHTML = getText($word, transform)
       })
-      el.querySelectorAll('.client_sentence_search').forEach($word => {
+      el.querySelectorAll('.client_sentence_search').forEach(($word) => {
         $word.outerHTML = `<span class="dictBing-SentenceItem_HL">${getText($word)}</span>`
       })
       sentences.push({
@@ -159,7 +160,10 @@ export function handleLexResult(
   return handleNoResult()
 }
 
-export function handleMachineResult(doc: Document, transform: null | ((text: string) => string)): BingSearchResultMachine | Promise<BingSearchResultMachine> {
+export function handleMachineResult(
+  doc: Document,
+  transform: null | ((text: string) => string),
+): BingSearchResultMachine | Promise<BingSearchResultMachine> {
   const mt = getText(doc, '.client_sen_cn', transform)
 
   if (mt) {
@@ -177,7 +181,7 @@ export function handleMachineResult(doc: Document, transform: null | ((text: str
 export function handleRelatedResult(
   doc: Document,
   config: BingConfig,
-  transform: null | ((text: string) => string)
+  transform: null | ((text: string) => string),
 ): BingSearchResultRelated | Promise<BingSearchResultRelated> {
   const searchResult: DictSearchResult<BingResultRelated> = {
     result: {
@@ -187,12 +191,12 @@ export function handleRelatedResult(
     },
   }
 
-  doc.querySelectorAll('.client_do_you_mean_area').forEach($area => {
+  doc.querySelectorAll('.client_do_you_mean_area').forEach(($area) => {
     const $defsList = $area.querySelectorAll('.client_do_you_mean_list')
     if ($defsList.length > 0) {
       searchResult.result.defs.push({
         title: getText($area, '.client_do_you_mean_title', transform),
-        meanings: Array.from($defsList).map($list => {
+        meanings: Array.from($defsList).map(($list) => {
           const word = getText($list, '.client_do_you_mean_list_word', transform)
           return {
             href: `https://cn.bing.com/dict/search?q=${word}`,

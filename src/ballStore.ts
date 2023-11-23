@@ -20,6 +20,10 @@ function emitChange() {
 }
 
 export const ballStore = {
+  close() {
+    ball = { ...ball, show: false }
+    emitChange()
+  },
   setBall(_ball: BallType) {
     ball = { ..._ball }
     emitChange()
