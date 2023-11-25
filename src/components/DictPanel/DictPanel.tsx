@@ -19,6 +19,7 @@ let offsetY: number
  * Cute little icon that pops up near the selection.
  */
 export const DictPanel: FC<DictPanelProps> = (props) => {
+  const { data, x, y } = props
   const panelRef = useRef<HTMLDivElement>()
   const dragRef = useRef<HTMLDivElement>()
   useEffect(() => {
@@ -49,8 +50,7 @@ export const DictPanel: FC<DictPanelProps> = (props) => {
       document.removeEventListener('mousemove', mousemoveListener)
       document.removeEventListener('mouseup', mouseupListener)
     }
-  }, [])
-  const { data, x, y } = props
+  }, [data, x, y])
   if (!data) {
     return null
   }
@@ -59,7 +59,6 @@ export const DictPanel: FC<DictPanelProps> = (props) => {
   if (!ec || !simple) {
     return null
   }
-
   return (
     <div
       ref={panelRef}
