@@ -24,7 +24,7 @@ function isInDictPanel(element: Node | EventTarget | null): boolean {
 document.addEventListener('mouseup', (e) => {
   const selection = window.getSelection()
   const text = selection?.toString().trim() || ''
-  if (!text) {
+  if (!text || !/\b[a-zA-Z]{2,}\b/gm.test(text)) {
     ballStore.setBall({ show: false, onActive: () => {} })
     return
   }
