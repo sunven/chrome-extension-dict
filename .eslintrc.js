@@ -35,5 +35,7 @@ module.exports = {
     'import/extensions': 0, // https://stackoverflow.com/questions/59265981/typescript-eslint-missing-file-extension-ts-import-extensions
     'jsx-a11y/click-events-have-key-events': 0,
     'jsx-a11y/no-static-element-interactions': 0,
+    'no-cond-assign': 0,
+    'no-plusplus': 0,
   },
 }
