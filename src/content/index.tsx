@@ -5,6 +5,7 @@ import { ballStore } from '../ballStore'
 import { panelStore } from '../panelStore'
 import DictPanelContainer from '../components/DictPanel/DictPanel.container'
 import './index.css'
+import { highlight } from '@/textNode'
 
 function isInDictPanel(element: Node | EventTarget | null): boolean {
   if (!element) {
@@ -28,6 +29,15 @@ document.addEventListener('mouseup', (e) => {
     ballStore.setBall({ show: false, onActive: () => {} })
     return
   }
+  const { commonAncestorContainer, startContainer, startOffset, endContainer, endOffset } =
+    selection!.getRangeAt(0)
+  highlight(
+    startContainer as Text,
+    startOffset,
+    endContainer as Text,
+    endOffset,
+    commonAncestorContainer,
+  )
   const rect = selection?.getRangeAt(0).getBoundingClientRect()
   const x = rect?.right
   const y = rect?.top || 0

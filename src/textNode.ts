@@ -19,7 +19,7 @@ const getSelectedNodes = (
   startOffset: number,
   endNode: Text,
   endOffset: number,
-  root: HTMLElement,
+  root: Node,
 ) => {
   // split current node when the start-node and end-node is the same
   if (startNode === endNode) {
@@ -85,7 +85,7 @@ export function highlight(
   startOffset: number,
   endNode: Text,
   endOffset: number,
-  root: HTMLElement = document.body,
+  root: Node = document.body,
 ) {
   const nodes = getSelectedNodes(startNode, startOffset, endNode, endOffset, root)
   nodes.forEach(({ node }) => {
