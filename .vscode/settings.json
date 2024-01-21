@@ -10,7 +10,7 @@
   "[javascript][typescript][javascriptreact][typescriptreact]": {
     "editor.formatOnSave": false,
     "editor.codeActionsOnSave": {
-      "source.fixAll": true
+      "source.fixAll": "explicit"
     }
   }
 }

@@ -28,7 +28,16 @@ export type ShadowPortalProps = ShadowPortalOwnProps & CSSTransitionProps
  * Remove the element from DOM when the Component unmounts.
  */
 export const ShadowPortal = (props: ShadowPortalProps) => {
-  const { id, head, shadowRootClassName, innerRootClassName, panelCSS, onEnter, onExited, ...restProps } = props
+  const {
+    id,
+    head,
+    shadowRootClassName,
+    innerRootClassName,
+    panelCSS,
+    onEnter,
+    onExited,
+    ...restProps
+  } = props
 
   const $root = useMemo(() => {
     let $root = document.getElementById(id)
@@ -47,7 +56,7 @@ export const ShadowPortal = (props: ShadowPortalProps) => {
         $root.remove()
       }
     },
-    []
+    [],
   )
 
   return createPortal(
@@ -81,7 +90,7 @@ export const ShadowPortal = (props: ShadowPortalProps) => {
         />
       </div>
     </root.div>,
-    $root
+    $root,
   )
 }
 
