@@ -1,8 +1,11 @@
+import merge from 'lodash/merge'
+
 export type PanelType = {
   show: boolean
   x?: number
   y?: number
   data: any
+  range?: Range
 }
 
 const initialPanel: PanelType = {
@@ -12,7 +15,7 @@ const initialPanel: PanelType = {
   data: undefined,
 }
 
-let panel = initialPanel
+let panel = { ...initialPanel }
 let listeners: Function[] = []
 
 function emitChange() {
@@ -20,16 +23,12 @@ function emitChange() {
 }
 
 export const panelStore = {
-  closePanel(show: boolean) {
-    panel = { ...panel, show }
+  reset() {
+    panel = { ...initialPanel }
     emitChange()
   },
-  setPanelData(data: any) {
-    panel = { ...panel, data }
-    emitChange()
-  },
-  setPanel(_panel: PanelType) {
-    panel = { ..._panel }
+  mergeData(_panel: Partial<PanelType>) {
+    panel = { ...merge(panel, _panel) }
     emitChange()
   },
   subscribe(listener: Function) {

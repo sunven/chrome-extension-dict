@@ -5,7 +5,6 @@ import { ballStore } from '../ballStore'
 import { panelStore } from '../panelStore'
 import DictPanelContainer from '../components/DictPanel/DictPanel.container'
 import './index.css'
-import { highlight } from '@/textNode'
 
 function isInDictPanel(element: Node | EventTarget | null): boolean {
   if (!element) {
@@ -29,16 +28,8 @@ document.addEventListener('mouseup', (e) => {
     ballStore.setBall({ show: false, onActive: () => {} })
     return
   }
-  const { commonAncestorContainer, startContainer, startOffset, endContainer, endOffset } =
-    selection!.getRangeAt(0)
-  highlight(
-    startContainer as Text,
-    startOffset,
-    endContainer as Text,
-    endOffset,
-    commonAncestorContainer,
-  )
-  const rect = selection?.getRangeAt(0).getBoundingClientRect()
+  const range = selection!.getRangeAt(0)
+  const rect = range.getBoundingClientRect()
   const x = rect?.right
   const y = rect?.top || 0
   ballStore.setBall({
@@ -47,7 +38,7 @@ document.addEventListener('mouseup', (e) => {
     y: y - 16,
     onActive: () => {
       ballStore.close()
-      panelStore.setPanel({ show: true, x, y: y - 80, data: undefined })
+      panelStore.mergeData({ show: true, x, y: y - 80, data: undefined, range })
       chrome.runtime.sendMessage(
         {
           type: 'fetchUrl',
@@ -55,7 +46,7 @@ document.addEventListener('mouseup', (e) => {
         },
         (res) => {
           // console.log('res', res)
-          panelStore.setPanelData(JSON.parse(res))
+          panelStore.mergeData({ data: JSON.parse(res) })
         },
       )
     },
@@ -96,7 +87,7 @@ document.addEventListener('mousedown', (e) => {
   if (isInDictPanel(e.target)) {
     return
   }
-  panelStore.closePanel(false)
+  panelStore.mergeData({ show: false })
 })
 
 function main() {

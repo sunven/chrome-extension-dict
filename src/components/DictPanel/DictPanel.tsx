@@ -1,7 +1,8 @@
-import React, { useState, useRef, type FC, useEffect } from 'react'
+import React, { useState, useRef, type FC, useEffect, RefObject } from 'react'
 import classnames from 'classnames'
 import { panelStore } from '@/panelStore'
 import closeImg from '@/assets/images/close.svg'
+import { highlight, serialize } from '@/textNode'
 
 export interface DictPanelProps {
   /** Viewport based coordinate. */
@@ -9,6 +10,7 @@ export interface DictPanelProps {
   /** Viewport based coordinate. */
   readonly y?: number
   readonly data: any
+  readonly range?: Range
 }
 
 let isDragging = false
@@ -19,9 +21,33 @@ let offsetY: number
  * Cute little icon that pops up near the selection.
  */
 export const DictPanel: FC<DictPanelProps> = (props) => {
-  const { data, x, y } = props
-  const panelRef = useRef<HTMLDivElement>()
-  const dragRef = useRef<HTMLDivElement>()
+  const { data, x, y, range } = props
+  const panelRef = useRef<HTMLDivElement>(null)
+  const dragRef = useRef<HTMLDivElement>(null)
+  const handleCollect = () => {
+    const {
+      startContainer,
+      startOffset,
+      endContainer,
+      endOffset,
+      commonAncestorContainer,
+    } = range!
+    highlight(
+      startContainer as Text,
+      startOffset,
+      endContainer as Text,
+      endOffset,
+      commonAncestorContainer,
+    )
+    const obj = serialize(
+      startContainer as Text,
+      startOffset,
+      endContainer as Text,
+      endOffset,
+      commonAncestorContainer,
+    )
+    console.log('obj', obj)
+  }
   useEffect(() => {
     const panelElement = panelRef.current
     const draggableElement = dragRef.current
@@ -80,11 +106,19 @@ export const DictPanel: FC<DictPanelProps> = (props) => {
           <>
             <div className="flex justify-between items-center gap-4 ">
               <div className="text-purple-500">Cranberry Dict</div>
+              <div className="cursor-pointer" onClick={handleCollect}>
+                🤍❤️
+              </div>
               <div ref={dragRef} className="flex-1 cursor-move h-8" />
               <div
                 className="cursor-pointer"
                 onClick={() => {
-                  panelStore.setPanel({ show: false, x: 0, y: 0, data: undefined })
+                  panelStore.mergeData({
+                    show: false,
+                    x: 0,
+                    y: 0,
+                    data: undefined,
+                  })
                 }}
               >
                 <img src={closeImg} />
@@ -101,14 +135,18 @@ export const DictPanel: FC<DictPanelProps> = (props) => {
                 const ind = txt.indexOf(' ')
                 return (
                   <div key={index} className="flex">
-                    <div className="w-10 flex-none text-blue-500">{txt.substring(0, ind)}</div>
+                    <div className="w-10 flex-none text-blue-500">
+                      {txt.substring(0, ind)}
+                    </div>
                     <div className="flex-auto">{txt.substring(ind + 1)}</div>
                   </div>
                 )
               })}
               <div className="flex">
                 <div className="w-10 flex-none" />
-                <div className="flex-auto">{(ec.exam_type || []).join('|')}</div>
+                <div className="flex-auto">
+                  {(ec.exam_type || []).join('|')}
+                </div>
               </div>
               <div className="max-w-md">
                 {(ec.word[0].wfs || []).map((item: any, index: number) => (

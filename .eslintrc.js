@@ -10,6 +10,8 @@ module.exports = {
     {
       env: {
         node: true,
+        webextensions: true,
+        browser: true,
       },
       files: ['.eslintrc.{js,cjs}'],
       parserOptions: {
@@ -22,7 +24,10 @@ module.exports = {
     sourceType: 'module',
   },
   settings: {
-    'import/resolver': { webpack: { config: './webpack/webpack.dev.js' }, typescript: {} },
+    'import/resolver': {
+      webpack: { config: './webpack/webpack.dev.js' },
+      typescript: {},
+    },
   },
   plugins: ['prettier'],
   rules: {
@@ -37,5 +42,6 @@ module.exports = {
     'jsx-a11y/no-static-element-interactions': 0,
     'no-cond-assign': 0,
     'no-plusplus': 0,
+    'no-undef': ['error', { chrome: true }],
   },
 }
